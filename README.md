@@ -19,6 +19,6 @@ $ docker-compose --version
 ### Usage
 
 1. Create a new `.env` file from the sample file. Change the `SFTP_USERNAME` if desired.
-2. Generate ssh keys with `make ssh-keygen`. When prompted you can either enter a secure password or just skip it.
+2. Generate ssh keys with `make ssh-keygen`. When prompted you can either enter a password or just skip it.
 3. Start the server with `make start`.
 4. Confirm the container is running on docker desktop or with `docker container ls -a`.
