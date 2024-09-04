@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  sftp:
+    image: ${SFTP_IMAGE}:${SFTP_VERSION}
+    container_name: sftp
+    restart: always
+    expose:
+      - "${SFTP_PORT}"
+    ports:
+      - "${SFTP_PORT}:${SFTP_PORT}"
+    volumes:
+      - ./keys/id_ed25519.pub:/home/${SFTP_USERNAME}/.ssh/keys/id_ed25519.pub:ro
+      - ./keys/id_rsa.pub:/home/${SFTP_USERNAME}/.ssh/keys/id_rsa.pub:ro
+      - ./keys/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key
+      - ./keys/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key
+      # should work in theory, but throws permission error on upload
+      # - ./${SFTP_STORAGE_DIRECTORY}:/home/${SFTP_USERNAME}/${SFTP_STORAGE_DIRECTORY}
+      - ./mount:/home/${SFTP_USERNAME}  # use this instead for now
+
+
+    command:
+      - ${SFTP_USERNAME}::1001::${SFTP_STORAGE_DIRECTORY}   # syntax: user:password[:e][:uid[:gid[:dir1[,dir2]...]]]
